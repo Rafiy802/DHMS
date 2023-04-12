@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appoointments', function (Blueprint $table) {
+        Schema::create('denstists', function (Blueprint $table) {
             $table->id();
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->string('ICnum');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appoointments');
+        Schema::dropIfExists('denstists');
     }
 };
