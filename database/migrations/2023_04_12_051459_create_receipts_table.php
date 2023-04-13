@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dentists', function (Blueprint $table) {
-            $table->id('dentist_id');
-            $table->bigInteger('user_id')->nullable()->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->string('ICnum');
+        Schema::create('receipts', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('denstists');
+        Schema::dropIfExists('receipts');
     }
 };

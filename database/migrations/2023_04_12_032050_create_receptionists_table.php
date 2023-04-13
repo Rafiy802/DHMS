@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('receptionist', function (Blueprint $table) {
-            $table->id();
+        Schema::create('receptionists', function (Blueprint $table) {
+            $table->id('receptionist_id');
+            $table->bigInteger('user_id')->nullable()->unsigned();
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

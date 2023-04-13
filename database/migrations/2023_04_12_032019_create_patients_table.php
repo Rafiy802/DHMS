@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->id();
+            $table->id('patient_id');
+            $table->bigInteger('user_id')->nullable()->unsigned();
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->string('ICnum');
             $table->timestamps();
         });
     }

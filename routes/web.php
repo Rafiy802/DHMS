@@ -13,10 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+
+//Main Routing
+Route::get('/',  [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//Routing for patient
+
+
+
+//Routing for Dentist
+
+
+
+//Routing for Receptionist
