@@ -15,13 +15,12 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->date('DayandTime');
+            $table->date('day');
+            $table->time('time');
             $table->bigInteger('patient_id')->nullable()->unsigned();
             $table->foreign('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
             $table->bigInteger('dentist_id')->nullable()->unsigned();
             $table->foreign('dentist_id')->references('dentist_id')->on('dentists')->onDelete('cascade');
-            $table->bigInteger('receptionist_id')->nullable()->unsigned();
-            $table->foreign('receptionist_id')->references('receptionist_id')->on('receptionists')->onDelete('cascade');
             $table->string('status');
             $table->timestamps();
         });
