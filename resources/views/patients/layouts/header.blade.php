@@ -10,15 +10,23 @@
         <ul>
           <li><a class="nav-link scrollto active" href="{{route('patients.dashboard')}}">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
+          <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{{route('receptionist.medicine.viewAll')}}">Manage Medicines</a></li>
+              <li><a href="#">TBA</a></li>
+            </ul>
+          </li>
           <!-- <li><a class="nav-link scrollto" href="#">Appointment</a></li> -->
           <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+          <li><a class="nav-link scrollto" href="{{route('dentist.allPatients.view')}}">Patients</a></li>
           <li class="dropdown"><a href="#"><span>Appointment</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{route('makeAppointment.view')}}">Make Appointment</a></li>
               <li><a href="{{route('patients.appointment.view')}}">My Appointment</a></li>
               <li><a href="{{route('dentist.appointment.view')}}">Dentist Appointment</a></li>
               <li><a href="{{route('receptionist.allAppointment.view')}}">All Appointment</a></li>
+              <li><a href="{{route('receptionist.medicine.viewAll')}}">Manage Medicines</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
                 <ul>
                   <li><a href="#">TBA</a></li>

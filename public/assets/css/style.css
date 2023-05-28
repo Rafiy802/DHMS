@@ -24,6 +24,18 @@
   display: inline-block;
 }
 
+.edit-smth a:link{
+  color: blue;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.delete-smth a:link{
+  color: red;
+  background-color: transparent;
+  text-decoration: none;
+}
+
 
 /*--------------------------------------------------------------
 # General

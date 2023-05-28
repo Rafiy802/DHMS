@@ -76,7 +76,26 @@ Route::put('/editProfile/{id}', [App\Http\Controllers\ProfileController::class, 
 # Routing for Dentist
 --------------------------------------------------------------*/
 
+
+//Appointments
+
 Route::get('/dentistAppointment', [App\Http\Controllers\AppointmentController::class, 'viewDentistAppointment'])->name('dentist.appointment.view');
+
+
+
+//Patient
+Route::get('/viewAllPatients', [App\Http\Controllers\PatientController::class, 'viewAllPatients'])->name('dentist.allPatients.view');
+
+Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 'viewPatient'])->name('dentist.patient.view');
+
+
+
+//Receipt
+
+
+
+
+
 
 
 /*--------------------------------------------------------------
@@ -89,4 +108,19 @@ Route::get('/allAppointment', [App\Http\Controllers\AppointmentController::class
 
 
 
+//Medicine
+Route::get('/allMedicines', [App\Http\Controllers\MedicineController::class, 'viewAllMedicine'])->name('receptionist.medicine.viewAll');
+Route::get('/addMedicine', function () {
+    return view('receptionist.addMedicine');
+})->name('receptionist.medicine.add');
+Route::get('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'viewEditMedicine'])->name('receptionist.medicine.edit');
+
+Route::post('/addMedicine', [App\Http\Controllers\MedicineController::class, 'addNewMedicine'])->name('receptionist.medicine.new');
+
+Route::put('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'editMedicine'])->name('receptionist.medicine.save');
+
+Route::delete('/deleteMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'deleteMedicine'])->name('receptionist.medicine.delete');
+
+
+//blum di implement
 Route::delete('/deleteBook/{id}', [App\Http\Controllers\AppointmentController::class, 'deleteAppointment'])->name('appointment.delete');

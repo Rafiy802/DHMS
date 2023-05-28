@@ -19,6 +19,8 @@
               <li><a href="{{route('patients.appointment.view')}}">My Appointment</a></li>
               <li><a href="#">Dentist Appointment</a></li>
               <li><a href="#">Patient Appointment</a></li>
+              <li><a href="#">Manage Medicine</a></li>
+              <li><a href="#">Manage Medicine</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
                 <ul>
                   <li><a href="#">TBA</a></li>
@@ -28,7 +30,6 @@
                   <li><a href="#">TBA</a></li>
                 </ul>
               </li>
-              <li><a href="#">TBA</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
