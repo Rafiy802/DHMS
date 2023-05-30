@@ -13,19 +13,18 @@
                     <div class="row">
                         <!-- Grid column -->
                         <div class="col-md-12">
-                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">Edit Medicines</h2>
+                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">New Treatments</h2>
                         </div>
                         <!-- Grid column -->
                     </div>
                     <!-- Grid row -->
-                    <form method="POST" action="{{route('receptionist.medicine.save', $medicine->id)}}">
+                    <form method="POST" action="{{route('receptionist.treatment.new')}}">
                         @csrf
-                        @method('PUT')
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$medicine->name}}"  required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"  required autocomplete="name" autofocus>
                             </div>
                         </div>
                         
@@ -36,23 +35,14 @@
                             <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
 
                             <div class="col-md-6">
-                                <input id="price" type="number" step='0.01' class="form-control @error('price') is-invalid @enderror" name="price" value="{{$medicine->price}}" required autocomplete="price">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="quantity" class="col-md-4 col-form-label text-md-end">Quantity</label>
-
-                            <div class="col-md-6">
-                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{$medicine->quantity}}" required autocomplete="quantity">
-                                
+                                <input id="price" type="number" step='0.01' class="form-control @error('price') is-invalid @enderror" name="price" required autocomplete="price">
                             </div>
                         </div>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Edit
+                                    Add
                                 </button>
                             </div>
                         </div>

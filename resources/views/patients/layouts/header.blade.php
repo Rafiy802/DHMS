@@ -14,7 +14,7 @@
           <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{route('receptionist.medicine.viewAll')}}">Manage Medicines</a></li>
-              <li><a href="#">TBA</a></li>
+              <li><a href="{{route('receptionist.treatment.viewAll')}}">Manage Treatments</a></li>
             </ul>
           </li>
           <!-- <li><a class="nav-link scrollto" href="#">Appointment</a></li> -->

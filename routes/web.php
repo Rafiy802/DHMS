@@ -122,5 +122,22 @@ Route::put('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class
 Route::delete('/deleteMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'deleteMedicine'])->name('receptionist.medicine.delete');
 
 
+
+//Treatments
+Route::get('/allTreatments', [App\Http\Controllers\TreatmentController::class, 'viewAllTreatments'])->name('receptionist.treatment.viewAll');
+Route::get('/addTreatment', function () {
+    return view('receptionist.addTreatment');
+})->name('receptionist.treatment.add');
+Route::get('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'viewEditTreatment'])->name('receptionist.treatment.edit');
+
+Route::post('/addTreatment', [App\Http\Controllers\TreatmentController::class, 'addNewTreatment'])->name('receptionist.treatment.new');
+
+Route::put('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'editTreatment'])->name('receptionist.treatment.save');
+
+Route::delete('/deleteTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'deleteTreatment'])->name('receptionist.treatment.delete');
+
+
+
+
 //blum di implement
 Route::delete('/deleteBook/{id}', [App\Http\Controllers\AppointmentController::class, 'deleteAppointment'])->name('appointment.delete');
