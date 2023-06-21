@@ -91,8 +91,19 @@ Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 
 
 
 //Receipt
+Route::get('/patientReceipt', function () {
+    return view('dentists.manageReceipt');
+})->name('dentist.receipt.viewAll');
 
+Route::get('/editReceipt', function () {
+    return view('dentists.editReceipt');
+})->name('dentist.receipt.viewEdit');
 
+Route::get('/addReceipt', [App\Http\Controllers\ReceiptController::class, 'viewNewReceipt'])->name('dentist.receipt.add');
+
+Route::post('/addReceipt', [App\Http\Controllers\ReceiptController::class, 'addNewReceipt'])->name('dentist.receipt.new');
+
+Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class, 'viewSelectedReceipt'])->name('dentist.receipt.view');
 
 
 
@@ -109,7 +120,7 @@ Route::get('/allAppointment', [App\Http\Controllers\AppointmentController::class
 
 
 //Medicine
-Route::get('/allMedicines', [App\Http\Controllers\MedicineController::class, 'viewAllMedicine'])->name('receptionist.medicine.viewAll');
+Route::get('/allMedicines', [App\Http\Controllers\MedicineController::class, 'viewAllMedicine'])->name('receptionist.medicine.viewAll')->middleware('auth');
 Route::get('/addMedicine', function () {
     return view('receptionist.addMedicine');
 })->name('receptionist.medicine.add');

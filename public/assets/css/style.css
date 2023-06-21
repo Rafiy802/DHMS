@@ -6,6 +6,56 @@
 * License: https://bootstrapmade.com/license/
 */
 
+/*--------------------------------------------------------------
+# Laravel pagination
+--------------------------------------------------------------*/
+
+.input-w-md {
+  width: 80px; /* Adjust the width as needed */
+}
+
+.custom-style .pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.custom-style .pagination .page-item {
+  margin-right: 5px;
+}
+
+.custom-style .pagination .page-item .page-link {
+  padding: 6px 12px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-style .pagination .page-item .page-link:hover {
+  background-color: #ddd;
+}
+
+.custom-style .pagination .page-item.active .page-link {
+  background-color: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+/* Small-sized arrows */
+.custom-style .pagination .page-item:first-child .page-link {
+  padding-left: 8px;
+}
+
+.custom-style .pagination .page-item:last-child .page-link {
+  padding-right: 8px;
+}
+
+.custom-style .pagination .page-link .arrow {
+  font-size: 5px;
+}
+
 
 /*--------------------------------------------------------------
 # Button
@@ -1287,7 +1337,7 @@ section {
 }
 
 .profile-info {
-  margin-left: 250px;
+  margin-left: 50px;
 }
 
 

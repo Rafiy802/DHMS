@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('medicine_receipt', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('receipt_id');
+            $table->unsignedBigInteger('medicine_id');
+            $table->decimal('price', 8, 2);
+            $table->integer('quantity');
             $table->timestamps();
 
             $table->foreign('receipt_id')->references('id')->on('receipts')->onDelete('cascade');
+            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });
     }
 
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('receipt_medicine');
     }
 };
