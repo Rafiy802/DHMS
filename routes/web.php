@@ -91,9 +91,11 @@ Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 
 
 
 //Receipt
-Route::get('/patientReceipt', function () {
-    return view('dentists.manageReceipt');
-})->name('dentist.receipt.viewAll');
+// Route::get('/patientReceipt', function () {
+//     return view('dentists.manageReceipt');
+// })->name('dentist.receipt.viewAll');
+
+Route::get('/patientReceipt', [App\Http\Controllers\ReceiptController::class, 'viewAllReceipt'])->name('dentist.receipt.viewAll');
 
 Route::get('/editReceipt', function () {
     return view('dentists.editReceipt');

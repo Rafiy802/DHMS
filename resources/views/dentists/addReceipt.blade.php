@@ -48,8 +48,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Medicine Name</th>
-                                        <th>Medicine Price</th>
+                                        <th>Treatment Name</th>
+                                        <th>Treatment Price</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>

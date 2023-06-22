@@ -1,4 +1,4 @@
-@extends('patients.patientIndex')
+@extends('receptionist.receptionistIndex')
 
 @section('content')
     <main id="main">

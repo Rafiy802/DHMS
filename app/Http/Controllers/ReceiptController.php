@@ -34,7 +34,7 @@ class ReceiptController extends Controller
         $medicines = $receipt->medicines;
         $treatments = $receipt->treatments;
 
-        return view('receipt.show', compact('receipt', 'medicines', 'treatments'));
+        return view('dentists.viewReceipt', compact('receipt', 'medicines', 'treatments'));
     }
 
 
