@@ -3,8 +3,6 @@
 @section('content')
     <main id="main">
         <div class="container mt-4">
-            <form method="POST" action="{{route('dentist.receipt.new')}}">
-                @csrf
 
                 <div class="card mb-4" style="margin-top: 100px;">
                     <div class="card-body">
@@ -87,11 +85,11 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            
         </div>
     </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.add-row-btn').click(function() {
@@ -169,5 +167,5 @@
                 updateRowNumbers(tableId);
             });
         });
-    </script>
+    </script> --}}
 @endsection

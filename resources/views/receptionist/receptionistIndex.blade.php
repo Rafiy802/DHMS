@@ -56,7 +56,7 @@
     </div>
   </div> -->
 
-  <!-- @include('layouts.header') -->
+  <!-- @include('receptionist.layouts.header') -->
 
   @yield('content')
 

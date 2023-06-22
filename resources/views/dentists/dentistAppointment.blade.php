@@ -1,4 +1,4 @@
-@extends('patients.patientIndex')
+@extends('dentists.dentistIndex')
 
 @section('content')
 
