@@ -45,7 +45,13 @@
 </head>
 
 <body>
-    @include('patients.layouts.header')
+    @if(Auth::user()->role == 1)
+        @include('patients.layouts.header')
+    @elseif( Auth::user()->role == 2)
+        @include('dentists.layouts.header')
+    @else
+        @include('receptionist.layouts.header')
+    @endif
 
     @yield('content')
 

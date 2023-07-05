@@ -4,7 +4,10 @@
     <main id="main">
         <div class="container mt-4">
 
-            <div class="card mb-4" style="margin-top: 100px;">
+            <a href="{{ route('receptionist.invoice.create', $receipt->id) }}" class="btn btn-primary"
+                style="margin-top: 100px;">Generate Invoice</a>
+
+            <div class="card mb-4 mt-4">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -29,8 +32,11 @@
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $med->name }}</td>
                                         <td>{{ $med->price }}</td>
-                                        <td>{{ $med->quantity }}</td>
-                                        <td>tot</td>
+                                        <td>{{ $med->pivot->quantity }}</td>
+                                        @php
+                                            $total = $med->pivot->quantity * $med->price;
+                                        @endphp
+                                        <td>{{ $total }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -59,13 +65,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($treatments as $treat)
-                                <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td>{{ $treat->name }}</td>
-                                    <td>{{ $treat->price }}</td>
-                                    <td>tot</td>
-                                </tr>
-                            @endforeach
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td>{{ $treat->name }}</td>
+                                        <td>{{ $treat->price }}</td>
+                                        <td>{{ $treat->price }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

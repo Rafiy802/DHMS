@@ -120,7 +120,18 @@ class AppointmentController extends Controller
 
         $appointnment->save();
 
-        return redirect()->route('patients.appointment.view');
+        $role = Auth::user()->role;
+
+        if($role == 1){
+            return redirect()->route('patients.appointment.view');
+        }
+        elseif($role == 2){
+            return redirect()->route('dentist.appointment.view');
+        }else{
+            return redirect()->route('receptionist.allAppointment.view');
+        }
+
+        
     }
 
 

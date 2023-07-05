@@ -18,11 +18,11 @@ use Illuminate\Http\Request;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
 
 
 //Main Routing
-//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
 Route::get('/', function () {
     return view('home');
@@ -37,20 +37,23 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 # Routing for patient
 --------------------------------------------------------------*/
 
+Route::group(['middleware' => ['auth', 'patient']], function() {
+    // Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view');
+    Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
+
+});
+
+
+
+
 //Appointments
 
-Route::get('/patient', function () {
-    return view('patients.patientHome');
-})->name('patients.dashboard');
-
 Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view');
-Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
+// Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
 
 Route::post('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'addMakeAppointment'])->name('makeAppointment.new');
 
 Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentController::class, 'cancelAppointment'])->name('appointment.cancel');
-
-
 
 
 //Profile
@@ -77,6 +80,10 @@ Route::put('/editProfile/{id}', [App\Http\Controllers\ProfileController::class, 
 --------------------------------------------------------------*/
 
 
+Route::group(['middleware' => ['auth', 'dentist']], function() {
+
+});
+
 //Appointments
 
 Route::get('/dentistAppointment', [App\Http\Controllers\AppointmentController::class, 'viewDentistAppointment'])->name('dentist.appointment.view');
@@ -91,9 +98,6 @@ Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 
 
 
 //Receipt
-// Route::get('/patientReceipt', function () {
-//     return view('dentists.manageReceipt');
-// })->name('dentist.receipt.viewAll');
 
 Route::get('/patientReceipt', [App\Http\Controllers\ReceiptController::class, 'viewAllReceipt'])->name('dentist.receipt.viewAll');
 
@@ -115,42 +119,56 @@ Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class,
 # Routing for Receptionist
 --------------------------------------------------------------*/
 
-//Apointments
+Route::group(['middleware' => ['auth', 'receptionist']], function() {
 
-Route::get('/allAppointment', [App\Http\Controllers\AppointmentController::class, 'viewAllAppointment'])->name('receptionist.allAppointment.view');
+    //Apointments
 
-
-
-//Medicine
-Route::get('/allMedicines', [App\Http\Controllers\MedicineController::class, 'viewAllMedicine'])->name('receptionist.medicine.viewAll')->middleware('auth');
-Route::get('/addMedicine', function () {
-    return view('receptionist.addMedicine');
-})->name('receptionist.medicine.add');
-Route::get('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'viewEditMedicine'])->name('receptionist.medicine.edit');
-
-Route::post('/addMedicine', [App\Http\Controllers\MedicineController::class, 'addNewMedicine'])->name('receptionist.medicine.new');
-
-Route::put('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'editMedicine'])->name('receptionist.medicine.save');
-
-Route::delete('/deleteMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'deleteMedicine'])->name('receptionist.medicine.delete');
+    Route::get('/allAppointment', [App\Http\Controllers\AppointmentController::class, 'viewAllAppointment'])->name('receptionist.allAppointment.view');
 
 
 
-//Treatments
-Route::get('/allTreatments', [App\Http\Controllers\TreatmentController::class, 'viewAllTreatments'])->name('receptionist.treatment.viewAll');
-Route::get('/addTreatment', function () {
-    return view('receptionist.addTreatment');
-})->name('receptionist.treatment.add');
-Route::get('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'viewEditTreatment'])->name('receptionist.treatment.edit');
+    //Medicine
+    Route::get('/allMedicines', [App\Http\Controllers\MedicineController::class, 'viewAllMedicine'])->name('receptionist.medicine.viewAll');
+    Route::get('/addMedicine', function () {
+        return view('receptionist.addMedicine');
+    })->name('receptionist.medicine.add');
+    Route::get('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'viewEditMedicine'])->name('receptionist.medicine.edit');
 
-Route::post('/addTreatment', [App\Http\Controllers\TreatmentController::class, 'addNewTreatment'])->name('receptionist.treatment.new');
+    Route::post('/addMedicine', [App\Http\Controllers\MedicineController::class, 'addNewMedicine'])->name('receptionist.medicine.new');
 
-Route::put('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'editTreatment'])->name('receptionist.treatment.save');
+    Route::put('/editMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'editMedicine'])->name('receptionist.medicine.save');
 
-Route::delete('/deleteTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'deleteTreatment'])->name('receptionist.treatment.delete');
+    Route::delete('/deleteMedicine/{id}', [App\Http\Controllers\MedicineController::class, 'deleteMedicine'])->name('receptionist.medicine.delete');
+
+
+
+    //Treatments
+    Route::get('/allTreatments', [App\Http\Controllers\TreatmentController::class, 'viewAllTreatments'])->name('receptionist.treatment.viewAll');
+    Route::get('/addTreatment', function () {
+        return view('receptionist.addTreatment');
+    })->name('receptionist.treatment.add');
+    Route::get('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'viewEditTreatment'])->name('receptionist.treatment.edit');
+
+    Route::post('/addTreatment', [App\Http\Controllers\TreatmentController::class, 'addNewTreatment'])->name('receptionist.treatment.new');
+
+    Route::put('/editTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'editTreatment'])->name('receptionist.treatment.save');
+
+    Route::delete('/deleteTreatment/{id}', [App\Http\Controllers\TreatmentController::class, 'deleteTreatment'])->name('receptionist.treatment.delete');
+
+
+
+});
+
+
+
+
+
+//Invoices
+Route::get('/invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'generateInvoice'])->name('receptionist.invoice.create');
+
 
 
 
 
 //blum di implement
-Route::delete('/deleteBook/{id}', [App\Http\Controllers\AppointmentController::class, 'deleteAppointment'])->name('appointment.delete');
+// Route::delete('/deleteBook/{id}', [App\Http\Controllers\AppointmentController::class, 'deleteAppointment'])->name('appointment.delete');

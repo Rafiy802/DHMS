@@ -12,7 +12,7 @@
                 <li><a class="nav-link scrollto" href="#about">About</a></li>
                 <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="#">Treatments</a></li>
+                        <li><a href="#services">Treatments</a></li>
                     </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
