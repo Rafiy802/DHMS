@@ -25,41 +25,49 @@
                     </div>
                     <!-- Grid row -->
                     <!--Table-->
-                    <table class="table table-striped">
-                        <!--Table head-->
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Receipt ID</th>
-                                <th>Created On</th>
-                                <th>Updated On</th>
-                                <th>Action</th>
-                                <!-- <th>Status</th>
-                                        <th>Action</th> -->
-                            </tr>
-                        </thead>
-                        <!--Table head-->
-                        <!--Table body-->
-                        <tbody>
-                            @php
-                                $currentPage = $receipts->currentPage();
-                                $perPage = $receipts->perPage();
-                                $startingNumber = ($currentPage - 1) * $perPage + 1;
-                            @endphp
-                            @foreach ($receipts as $rec)
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <!--Table head-->
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $loop->index + $startingNumber }}</th>
-                                    <td>{{ $rec->id }}</td>
-                                    <td>{{ $rec->created_at }}</td>
-                                    <td>{{ $rec->updated_at }}</td>
-                                    <td>
-                                        <a href="{{ route('dentist.receipt.view', $rec->id) }}">View Receipt</a>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Receipt ID</th>
+                                    <th>Created On</th>
+                                    <th>Updated On</th>
+                                    <th>By</th>
+                                    <th>Action</th>
+                                    <!-- <th>Status</th>
+                                            <th>Action</th> -->
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <!--Table body-->
-                    </table>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+                                @php
+                                    $currentPage = $receipts->currentPage();
+                                    $perPage = $receipts->perPage();
+                                    $startingNumber = ($currentPage - 1) * $perPage + 1;
+                                @endphp
+                                @forelse ($receipts as $rec)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + $startingNumber }}</th>
+                                        <td>{{ $rec->id }}</td>
+                                        <td>{{ $rec->created_at }}</td>
+                                        <td>{{ $rec->updated_at }}</td>
+                                        <td>{{ $rec->dentist_name }}</td>
+                                        <td>
+                                            <a href="{{ route('dentist.receipt.view', $rec->id) }}">View Receipt</a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="12" class="text-center align-middle"><strong>There is no receipt for this patient yet.</strong></td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                    </div>
                     <!--Table-->
                 </div>
             </div>

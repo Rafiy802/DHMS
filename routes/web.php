@@ -56,12 +56,12 @@ Route::group(['middleware' => ['auth', 'patient']], function () {
 
 //Appointments
 
-Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view');
+Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view')->middleware('auth');
 // Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
 
-Route::post('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'addMakeAppointment'])->name('makeAppointment.new');
+Route::post('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'addMakeAppointment'])->name('makeAppointment.new')->middleware('auth');
 
-Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentController::class, 'cancelAppointment'])->name('appointment.cancel');
+Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentController::class, 'cancelAppointment'])->name('appointment.cancel')->middleware('auth');
 
 
 
@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth', 'dentist']], function () {
 
     Route::put('/editDentistProfile/{id}', [App\Http\Controllers\ProfileController::class, 'editDentistProfile'])->name('dentist.profile.edit');
 
-
+    // Route::post('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'addMakeAppointment'])->name('makeAppointment.new')->middleware('auth');
 
 
 
@@ -111,7 +111,7 @@ Route::get('/editReceipt', function () {
 
 Route::get('/addReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewNewReceipt'])->name('dentist.receipt.add');
 
-Route::post('/addReceipt{id}', [App\Http\Controllers\ReceiptController::class, 'addNewReceipt'])->name('dentist.receipt.new');
+Route::post('/addReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'addNewReceipt'])->name('dentist.receipt.new');
 
 Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class, 'viewSelectedReceipt'])->name('dentist.receipt.view');
 

@@ -18,17 +18,17 @@ class TreatmentSeeder extends Seeder
         //
 
         DB::table('treatments')->insert([
-            'name' => 'Tooth Pick',
+            'name' => 'Tooth Extraction',
             'price' => 10,
         ]);
 
         DB::table('treatments')->insert([
-            'name' => 'Treat 2',
+            'name' => 'Consultation',
             'price' => 5,
         ]);
 
         DB::table('treatments')->insert([
-            'name' => 'Trick or Treat',
+            'name' => 'Treatment 3',
             'price' => 32,
         ]);
     }

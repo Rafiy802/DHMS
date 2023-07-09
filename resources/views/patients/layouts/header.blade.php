@@ -9,14 +9,14 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto active" href="{{ route('home') }}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                {{-- <li><a class="nav-link scrollto" href="#about">About</a></li> --}}
                 {{-- <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{route('receptionist.medicine.viewAll')}}">Manage Medicines</a></li>
               <li><a href="{{route('receptionist.treatment.viewAll')}}">Manage Treatments</a></li>
             </ul>
           </li> --}}
-                <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+                {{-- <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li> --}}
                 <li class="dropdown"><a href="#"><span>Appointment</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{{ route('makeAppointment.view') }}">Make Appointment</a></li>
@@ -34,7 +34,7 @@
                         <li><a href="#">TBA</a></li> --}}
                     </ul>
                 </li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                {{-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> --}}
                 <!-- .navbar -->
 
                 <!-- <a href="{{ route('login') }}" class="appointment-btn scrollto">Login</a> -->
@@ -51,8 +51,8 @@
                         class="bi bi-chevron-down"></i></a>
                 <ul>
                     <li><a href="{{ route('patients.profile') }}">Profile</a></li>
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
+                    {{-- <li><a href="#">Option 1</a></li>
+                    <li><a href="#">Option 2</a></li> --}}
                     <li><a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -47,7 +47,7 @@
                                 <tr>
                                     <th scope="row">{{ $loop->index + $startingNumber }}</th>
                                     <td>{{ $patient->name }}</td>
-                                    <td> TBA </td>
+                                    <td> {{ $patient->created_at }} </td>
                                     <td>
                                         <a href="{{ route('dentist.patient.view', $patient->patient_id) }}">View More
                                             Info</a>

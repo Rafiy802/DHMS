@@ -9,7 +9,7 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto active" href="{{ route('home') }}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                {{-- <li><a class="nav-link scrollto" href="#about">About</a></li> --}}
                 {{-- <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{{ route('receptionist.medicine.viewAll') }}">Manage Medicines</a></li>
@@ -34,7 +34,7 @@
                         <li><a href="#">TBA</a></li> --}}
                     </ul>
                 </li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                {{-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> --}}
                 <!-- .navbar -->
 
 

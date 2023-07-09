@@ -20,14 +20,14 @@ class DentistSeeder extends Seeder
             'dentist_id' => 2,
             'user_id' => 2,
             'name' => 'Rafiy',
-            'ICnum' => 'fseafw4rfw4fw',
+            'ICnum' => '201908M101',
         ]);
 
         DB::table('dentists')->insert([
             'dentist_id' => 3,
             'user_id' => 3  ,
             'name' => 'Lia',
-            'ICnum' => 'egshhtsht3',
+            'ICnum' => '201707F898',
         ]);
     }
 }

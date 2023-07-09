@@ -9,13 +9,13 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto active" href="{{ route('home') }}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
-                <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+                <li><a class="nav-link scrollto" href="#why-us">About</a></li>
+                {{-- <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="#services">Treatments</a></li>
                     </ul>
-                </li>
-                <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+                </li> --}}
+                {{--     --}}
                 {{-- <li class="dropdown"><a href="#"><span>Appointment</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i

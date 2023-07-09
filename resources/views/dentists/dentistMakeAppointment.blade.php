@@ -1,4 +1,4 @@
-@extends('patients.patientIndex')
+@extends('dentists.dentistIndex')
 
 
 @section('content')
@@ -10,10 +10,11 @@
 
                 <div class="section-title">
                     <h2>Make an Appointment</h2>
-                    <p>Please choose the date, time and the dentist you want to make an appointment with.</p>
+                    <p>Please choose the date, time and the patient you want to make an appointment with.</p>
                 </div>
 
                 <form action="{{ route('makeAppointment.new') }}" method="POST">
+                    {{-- {{ route('makeAppointment.dentist.new') }} --}}
                     @csrf
 
                     <div class="row">
@@ -28,13 +29,8 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <input type="hidden" value="{{ Auth::user()->user_id }}" name="patient_id">
+                        <input type="hidden" value="{{ Auth::user()->user_id }}" name="dentist_id">
                         <input type="hidden" value="Ongoing" name="status">
-                        <!-- <div class="col-12 col-sm-6">
-                        <div class="date" id="date" data-target-input="nearest">
-                            <input type="date" class="form-control datepicker" placeholder="Appointment Date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" name="date">
-                        </div>
-                    </div> -->
                         <div class="col-md-4 form-group mt-3">
                             <select name="time" id="time" class="form-select">
                                 <option value="">Select Time</option>
@@ -57,10 +53,10 @@
                             @enderror
                         </div>
                         <div class="col-md-4 form-group mt-3">
-                            <select name="dentist_id" id="dentist_id" class="form-select">
-                                <option value="">Select Dentist</option>
-                                @foreach ($dentists as $dentist)
-                                    <option value="{{ $dentist->user_id }}">{{ $dentist->name }}</option>
+                            <select name="patient_id" id="patient_id" class="form-select">
+                                <option value="">Select patient</option>
+                                @foreach ($patients as $patient)
+                                    <option value="{{ $patient->user_id }}">{{ $patient->name }}</option>
                                 @endforeach
                             </select>
                             @error('patient_id')

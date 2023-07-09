@@ -34,6 +34,7 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         $patient = Patient::findOrFail($id);
 
+        $patient->name = request('name');
 
         $user->name = request('name');
         $user->address = request('address');
@@ -69,6 +70,7 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         $dentist = Dentist::findOrFail($id);
 
+        $dentist->name = request('name');
 
         $user->name = request('name');
         $user->address = request('address');

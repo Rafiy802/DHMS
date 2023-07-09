@@ -14,14 +14,14 @@
                         <div class="col-md-12">
                             <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">All Appointment</h2>
                             <!-- <div class="input-group md-form form-sm form-2 pl-0">
-                            <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
-                            <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
-                        </div> -->
+                                <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
+                                <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                            </div> -->
                         </div>
                         <!-- Grid column -->
                     </div>
-                    <a href="{{ route('receptionist.historyAppointment.view') }}" class="btn btn-primary"
-                        >View Appointment's History</a>
+                    <a href="{{ route('receptionist.historyAppointment.view') }}" class="btn btn-primary">View Appointment's
+                        History</a>
                     <!-- Grid row -->
                     <!--Table-->
                     <div class="table-responsive">
@@ -37,7 +37,7 @@
                                     <th>Time</th>
                                     <th>Dentist</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th colspan="2" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <!--Table head-->
@@ -53,18 +53,18 @@
                                 @forelse ($todayAppointment as $today)
                                     <tr>
                                         {{-- <th scope="row">{{ $loop->index + $startingNumber }}</th> --}}
-                                        <th scope="row">{{ $loop->index + 1}}</th>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $today->patient_name }}</td>
                                         <td>{{ $today->day }}</td>
                                         <td>{{ $today->time }}</td>
                                         <td>{{ $today->dentist_name }}</td>
                                         <td>{{ $today->status }}</td>
-                                        <td>
-                                            @if ($today->status == 'Cancelled')
-                                                {{ $today->status }}
-                                            @else
-                                                <form method="POST"
-                                                    action="{{ route('appointment.cancel', $today->id) }}">
+
+                                        @if ($today->status != 'Ongoing')
+                                            <td colspan="2">{{ $today->status }}</td>
+                                        @else
+                                            <td>
+                                                <form method="POST" action="{{ route('appointment.cancel', $today->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <!-- <a class="cancel-btn scrollto" href="#">Cancel</a> -->
@@ -78,12 +78,31 @@
                                                         </div>
                                                     </div>
                                                 </form>
-                                            @endif
-                                        </td>
+                                            </td>
+                                            /
+                                            <td>
+                                                <form method="POST"
+                                                    action="{{ route('appointment.cancel', $today->id) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <!-- <a class="cancel-btn scrollto" href="#">Cancel</a> -->
+                                                    <div class="row mb-0">
+                                                        <div class="col-md-6">
+                                                            <input type="hidden" value="{{ $today->id }}"
+                                                                name="appointment_id">
+                                                            <input type="hidden" value="Done" name="appointment_status">
+                                                            <button type="submit" class="btn btn-success">Done</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        @endif
+
                                     </tr>
-                                    @empty
+                                @empty
                                     <tr>
-                                        <td colspan="12" class="text-center align-middle"><strong>No appointments for today.</strong></td>
+                                        <td colspan="12" class="text-center align-middle"><strong>No appointments for
+                                                today.</strong></td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -149,9 +168,10 @@
                                             @endif
                                         </td>
                                     </tr>
-                                    @empty
+                                @empty
                                     <tr>
-                                        <td colspan="12" class="text-center align-middle"><strong>No appointments yet.</strong></td>
+                                        <td colspan="12" class="text-center align-middle"><strong>No appointments
+                                                yet.</strong></td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -166,7 +186,7 @@
                     <!--Table-->
                 </div>
             </div>
-            
+
         </div>
 
     </main>

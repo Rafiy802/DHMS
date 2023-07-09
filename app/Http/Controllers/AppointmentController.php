@@ -15,48 +15,19 @@ class AppointmentController extends Controller
 {
     public function viewMakeAppointment()
     {
-        // $exist_time = array('10:15:00', '10:30:00', '10:45:00');
-
-        // $values = [
-        //     '10:00:00' => '10:00 AM',
-        //     '10:15:00' => '10:15 AM',
-        //     '10:30:00' => '10:30 AM',
-        //     '10:45:00' => '10:45 AM',
-        //     '11:00:00' => '11:00 AM',
-        //     '11:15:00' => '11:15 AM',
-        //     '11:30:00' => '11:30 AM',
-        //     '11:45:00' => '11:45 AM',
-        //     '12:00:00' => '12:00 AM',
-        //     '12:15:00' => '12:15 AM',
-        //     '12:30:00' => '12:30 AM',
-        //     '12:45:00' => '12:45 AM',
-        //     '13:00:00' => '01:00 PM'
-        // ];
-
-        $list_time = [
-            '10:00:00',
-            '10:15:00',
-            '10:30:00',
-            '10:45:00',
-            '11:00:00',
-            '11:15:00',
-            '11:30:00',
-            '11:45:00',
-            '12:00:00',
-            '12:15:00',
-            '12:30:00',
-            '12:45:00',
-            '13:00:00'
-        ];
-
-        $exist_time = []; //ambil dari database appointment
-
-        $available_time = array_diff($list_time, $exist_time);
-        ;
+        $role = Auth::user()->role;
 
         $dentists = User::where('role', '=', '2')->get();
+        $patient = User::where('role', '=', '1')->get();
 
-        return view('patients.makeAppointment', ['dentists' => $dentists, 'time' => $available_time]);
+
+        if ($role == 1) {
+            return view('patients.makeAppointment', ['dentists' => $dentists]);
+        } elseif ($role == 2) {
+            return view('dentists.dentistMakeAppointment', ['patients' => $patient]);
+        } else {
+            return view('receptionist.receptionistMakeAppointment', ['dentists' => $dentists, 'patients' => $patient]);
+        }
     }
 
 
@@ -114,24 +85,94 @@ class AppointmentController extends Controller
 
     public function addMakeAppointment(Request $request)
     {
-        $request->validate([
-            'dentist_id' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'dentist_id' => [
-                'required',
-                Rule::unique('appointments')->where(function ($query) use ($request) {
-                    return $query->where('day', $request->date)
-                        ->where('time', $request->time)
-                        ->where('dentist_id', $request->dentist_id);
-                })->ignore($request->id),
-            ],
-        ], [
-            'dentist_id.required' => 'Please select the dentist.',
-            'date.required' => 'Please select the date.',
-            'time.required' => 'Please select the time.',
-            'dentist_id.unique' => 'An appointment already exists on the selected date and time with the same dentist.',
-        ]);
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+            $request->validate([
+                'patient_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('patient_id', $request->patient_id);
+                    })->ignore($request->id),
+                ],
+                'date' => 'required',
+                'time' => 'required',
+                'dentist_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('dentist_id', $request->dentist_id);
+                    })->ignore($request->id),
+                ],
+            ], [
+                'patient_id.required' => 'Please select the patient.',
+                'patient_id.unique' => 'You already have an appointment on the same time and date.',
+                'date.required' => 'Please select the date.',
+                'time.required' => 'Please select the time.',
+                'dentist_id.required' => 'Please select the dentist.',
+                'dentist_id.unique' => 'Dentist already have an appointment on the same time and date.',
+            ]);
+        } elseif ($role == 2) {
+            $request->validate([
+                'patient_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('patient_id', $request->patient_id);
+                    })->ignore($request->id),
+                ],
+                'date' => 'required',
+                'time' => 'required',
+                'dentist_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('dentist_id', $request->dentist_id);
+                    })->ignore($request->id),
+                ],
+            ], [
+                'patient_id.required' => 'Please select the patient.',
+                'patient_id.unique' => 'Patient already have an appointment on the same time and date.',
+                'date.required' => 'Please select the date.',
+                'time.required' => 'Please select the time.',
+                'dentist_id.required' => 'Please select the dentist.',
+                'dentist_id.unique' => 'You already have an appointment on the same time and date.',
+            ]);
+        } else {
+            $request->validate([
+                'patient_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('patient_id', $request->patient_id);
+                    })->ignore($request->id),
+                ],
+                'date' => 'required',
+                'time' => 'required',
+                'dentist_id' => [
+                    'required',
+                    Rule::unique('appointments')->where(function ($query) use ($request) {
+                        return $query->where('day', $request->date)
+                            ->where('time', $request->time)
+                            ->where('dentist_id', $request->dentist_id);
+                    })->ignore($request->id),
+                ],
+            ], [
+                'patient_id.required' => 'Please select the patient.',
+                'patient_id.unique' => 'Patient already have an appointment on the same time and date.',
+                'date.required' => 'Please select the date.',
+                'time.required' => 'Please select the time.',
+                'dentist_id.required' => 'Please select the dentist.',
+                'dentist_id.unique' => 'Dentist already have an appointment on the same time and date.',
+            ]);
+        }
+
 
         $appointment = new Appointment;
 
@@ -144,7 +185,14 @@ class AppointmentController extends Controller
         $appointment->save();
 
         session()->flash('message', 'Appointment has been made.');
-        return redirect()->route('patients.appointment.view');
+        
+        if ($role == 1) {
+            return redirect()->route('patients.appointment.view');
+        } elseif ($role == 2) {
+            return redirect()->route('dentist.appointment.view');
+        } else {
+            return redirect()->route('receptionist.allAppointment.view');
+        }
     }
 
     public function cancelAppointment($id)

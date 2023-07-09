@@ -17,21 +17,21 @@ class MedicineSeeder extends Seeder
     {
         //
         DB::table('medicines')->insert([
-            'price' => 20,
-            'name' => 'rd-456',
+            'price' => 5,
+            'name' => 'Cataflam 50 mg',
             'quantity' => 10,
         ]);
 
         DB::table('medicines')->insert([
-            'price' => 3,
-            'name' => 'GG456',
+            'price' => 13,
+            'name' => 'Mefinal 500 mg',
             'quantity' => 20,
         ]);
 
         DB::table('medicines')->insert([
-            'price' => 5,
-            'name' => 'paracetamol',
-            'quantity' => 200,
+            'price' => 15,
+            'name' => 'Amoxillin 500 mg',
+            'quantity' => 30,
         ]);
     }
 }

@@ -4,13 +4,10 @@
     <main id="main">
         <div class="container mt-4">
 
-            <a href="#" class="btn btn-primary"
-                style="margin-top: 100px;">Edit Receipt</a>
+            {{-- <a href="{{ route('receptionist.invoice.create', $receipt->id) }}" class="btn btn-primary"
+                style="margin-top: 100px;">Generate Invoice</a> --}}
 
-            <a href="{{ route('receptionist.invoice.create', $receipt->id) }}" class="btn btn-primary"
-                style="margin-top: 100px;">Generate Invoice</a>
-
-            <div class="card mb-4 mt-4">
+            <div class="card mb-4" style="margin-top: 100px;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">

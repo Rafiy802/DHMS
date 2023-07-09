@@ -45,7 +45,7 @@
                                 $perPage = $receipts->perPage();
                                 $startingNumber = ($currentPage - 1) * $perPage + 1;
                             @endphp
-                            @foreach ($receipts as $rec)
+                            @forelse ($receipts as $rec)
                                 <tr>
                                     <th scope="row">{{ $loop->index + $startingNumber }}</th>
                                     <td>{{ $rec->id }}</td>
@@ -55,7 +55,11 @@
                                         <a href="{{ route('dentist.receipt.view', $rec->id) }}">View Receipt</a>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="12" class="text-center align-middle"><strong>There is no receipt for this patient yet.</strong></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                         <!--Table body-->
                     </table>
