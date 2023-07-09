@@ -72,7 +72,7 @@ class DentistController extends Controller
         $user = User::findOrFail($id);
         $dentist = Dentist::findOrFail($id);
 
-
+        $dentist->name = request('name');
         $user->name = request('name');
         $user->address = request('address');
         $user->mobile_num = request('mobile_num');
