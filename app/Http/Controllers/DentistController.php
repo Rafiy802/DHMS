@@ -56,5 +56,34 @@ class DentistController extends Controller
 
     }
 
-    
+    public function viewDentistInfo($id){
+
+        $dentists = Dentist::join('users', 'users.user_id', '=', 'dentists.dentist_id')->where('dentists.dentist_id',$id)->get(['users.*', 'dentists.ICnum as IC']);
+
+        return view('receptionist.viewDentist', ['dentists' => $dentists]);
+    }
+
+    public function viewEditDentistInfo($id){
+
+        $dentists = Dentist::join('users', 'users.user_id', '=', 'dentists.dentist_id')->where('dentists.dentist_id',$id)->get(['users.*', 'dentists.ICnum as IC']);
+
+        return view('receptionist.editDentistInfo', ['dentists' => $dentists]);
+    }
+
+    public function editDentistInfo($id)
+    {
+
+        $user = User::findOrFail($id);
+        $dentist = Dentist::findOrFail($id);
+
+
+        $user->name = request('name');
+        $user->address = request('address');
+        $user->mobile_num = request('mobile_num');
+
+        $user->save();
+        $dentist->save();
+
+        return redirect()->route('receptionist.dentist.view', $id);
+    }
 }

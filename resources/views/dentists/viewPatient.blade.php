@@ -14,11 +14,11 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-6 d-flex align-items-center justify-content-center">
-                                <div class="pic">
+                                {{-- <div class="pic">
                                     <img src="{{ asset('assets/img/doctors/doctors-1.jpg') }}"
                                         class="img-fluid rounded-circle" alt=""
                                         style="width: 200px; height: 200px;">
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-lg-8 col-md-6">
                                 @foreach ($patient as $patient)
@@ -39,10 +39,12 @@
                                         <a class="appointment-btn scrollto"
                                             href="{{ route('dentist.receipt.viewAll', $patient->user_id) }}">Manage
                                             Receipt</a>
-                                    @else
+                                    @elseif(Auth::user()->role == 0)
                                         <a class="appointment-btn scrollto"
                                             href="{{ route('receptionist.receipt.viewAll', $patient->user_id) }}">Manage
                                             Receipt</a>
+                                            <a class="appointment-btn scrollto"
+                                            href="{{ route('receptionist.patientInfo.view', $patient->user_id) }}">Edit Patient Info</a>
                                     @endif
                                 </div>
                             </div>

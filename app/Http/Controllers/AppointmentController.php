@@ -71,12 +71,12 @@ class AppointmentController extends Controller
         $todayAppointment = Appointment::join('patients', 'patients.user_id', '=', 'appointments.patient_id')
             ->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')
             ->where('appointments.patient_id', $curr)
-            ->whereDate('day', $today) 
-            ->orderBy('day', 'desc')
+            ->whereDate('day', $today)
+            ->orderBy('day', 'asc')
             ->get(['appointments.*', 'dentists.name as dentist_name']);
 
-        $appointments = Appointment::join('patients', 'patients.user_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.patient_id', $curr)->orderBy('day', 'desc')->paginate(2, ['appointments.*', 'dentists.name as dentist_name']);
-        
+        $appointments = Appointment::join('patients', 'patients.user_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.patient_id', $curr)->whereDate('day', '>', $today)->orderBy('day', 'asc')->paginate(10, ['appointments.*', 'dentists.name as dentist_name']);
+
         return view('patients.patientAppointment', ['appointments' => $appointments, 'todayAppointment' => $todayAppointment]);
     }
 
@@ -86,9 +86,9 @@ class AppointmentController extends Controller
         $curr = Auth::user()->user_id;
 
         $today = Carbon::now()->format('Y-m-d');
-        $todayAppointment = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.dentist_id', $curr)->whereDate('day', $today)->orderBy('day', 'desc')->get(['appointments.*', 'patients.name as patient_name']);
+        $todayAppointment = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.dentist_id', $curr)->whereDate('day', $today)->orderBy('day', 'asc')->get(['appointments.*', 'patients.name as patient_name']);
 
-        $appointments = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.dentist_id', $curr)->orderBy('day', 'desc')->paginate(10, ['appointments.*', 'patients.name as patient_name']);
+        $appointments = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->where('appointments.dentist_id', $curr)->whereDate('day', '>', $today)->orderBy('day', 'asc')->paginate(10, ['appointments.*', 'patients.name as patient_name']);
 
         return view('dentists.dentistAppointment', ['appointments' => $appointments, 'todayAppointment' => $todayAppointment]);
     }
@@ -98,55 +98,54 @@ class AppointmentController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $todayAppointment = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->whereDate('day', $today)->orderBy('day', 'asc')->get(['appointments.*', 'patients.name as patient_name', 'dentists.name as dentist_name']);
 
-        $appointments = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->orderBy('day', 'asc')->paginate(10, ['appointments.*', 'patients.name as patient_name', 'dentists.name as dentist_name']);
+        $appointments = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->whereDate('day', '>', $today)->orderBy('day', 'asc')->paginate(10, ['appointments.*', 'patients.name as patient_name', 'dentists.name as dentist_name']);
 
         return view('receptionist.allAppointment', ['appointments' => $appointments, 'todayAppointment' => $todayAppointment]);
     }
 
+    public function viewHistoryAppointment()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        $appointments = Appointment::join('patients', 'patients.patient_id', '=', 'appointments.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'appointments.dentist_id')->whereDate('day', '<', $today)->orderBy('day', 'desc')->paginate(10, ['appointments.*', 'patients.name as patient_name', 'dentists.name as dentist_name']);
+
+        return view('receptionist.historyAppointment', ['appointments' => $appointments]);
+    }
+
     public function addMakeAppointment(Request $request)
-{
-    $request->validate([
-        'dentist_id' => 'required',
-        'date' => 'required',
-        'time' => 'required',
-        'dentist_id' => [
-            'required',
-            Rule::unique('appointments')->where(function ($query) use ($request) {
-                return $query->where('day', $request->date)
-                    ->where('time', $request->time)
-                    ->where('dentist_id', $request->dentist_id);
-            })->ignore($request->id),
-        ],
-    ], [
-        'dentist_id.required' => 'Please select the dentist.',
-        'date.required' => 'Please select the date.',
-        'time.required' => 'Please select the time.',
-        'dentist_id.unique' => 'An appointment already exists on the selected date and time with the same dentist.',
-    ]);
+    {
+        $request->validate([
+            'dentist_id' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+            'dentist_id' => [
+                'required',
+                Rule::unique('appointments')->where(function ($query) use ($request) {
+                    return $query->where('day', $request->date)
+                        ->where('time', $request->time)
+                        ->where('dentist_id', $request->dentist_id);
+                })->ignore($request->id),
+            ],
+        ], [
+            'dentist_id.required' => 'Please select the dentist.',
+            'date.required' => 'Please select the date.',
+            'time.required' => 'Please select the time.',
+            'dentist_id.unique' => 'An appointment already exists on the selected date and time with the same dentist.',
+        ]);
 
-    $appointment = new Appointment;
+        $appointment = new Appointment;
 
-    $appointment->day = $request->input('date');
-    $appointment->time = $request->input('time');
-    $appointment->patient_id = $request->input('patient_id');
-    $appointment->dentist_id = $request->input('dentist_id');
-    $appointment->status = $request->input('status');
+        $appointment->day = $request->input('date');
+        $appointment->time = $request->input('time');
+        $appointment->patient_id = $request->input('patient_id');
+        $appointment->dentist_id = $request->input('dentist_id');
+        $appointment->status = $request->input('status');
 
-    $appointment->save();
+        $appointment->save();
 
-    session()->flash('message', 'Appointment has been made.');
-    return redirect()->route('patients.appointment.view');
-}
-
-
-
-    // $appointment = Appointment::create([
-    //     'day' => $request['date'],
-    //     'time' => $request['time'],
-    //     'patient_id' => $request['patient_id'],
-    //     'dentist_id ' => $request['dentist_id '],
-    //     'status' => $request['status'],
-    // ]);
+        session()->flash('message', 'Appointment has been made.');
+        return redirect()->route('patients.appointment.view');
+    }
 
     public function cancelAppointment($id)
     {

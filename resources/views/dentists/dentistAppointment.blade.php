@@ -14,9 +14,9 @@
                         <div class="col-md-12">
                             <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">My Appointment</h2>
                             <!-- <div class="input-group md-form form-sm form-2 pl-0">
-                                        <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
-                                        <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
-                                    </div> -->
+                                                <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
+                                                <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                                            </div> -->
                         </div>
                         <!-- Grid column -->
                     </div>
@@ -42,7 +42,7 @@
                                 $perPage = $appointments->perPage();
                                 $startingNumber = ($currentPage - 1) * $perPage + 1;
                             @endphp --}}
-                            @foreach ($todayAppointment as $today)
+                            @forelse ($todayAppointment as $today)
                                 <tr>
                                     {{-- <th scope="row">{{ $loop->index + $startingNumber }}</th> --}}
                                     <th scope="row">{{ $loop->index + 1 }}</th>
@@ -54,8 +54,7 @@
                                         @if ($today->status == 'Cancelled')
                                             {{ $today->status }}
                                         @else
-                                            <form method="POST"
-                                                action="{{ route('appointment.cancel', $today->id) }}">
+                                            <form method="POST" action="{{ route('appointment.cancel', $today->id) }}">
                                                 @csrf
                                                 @method('PUT')
                                                 <!-- <a class="cancel-btn scrollto" href="#">Cancel</a> -->
@@ -71,7 +70,11 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="12" class="text-center align-middle"><strong>No appointments for today.</strong></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                         <!--Table body-->
                     </table>
@@ -97,7 +100,7 @@
                                 $perPage = $appointments->perPage();
                                 $startingNumber = ($currentPage - 1) * $perPage + 1;
                             @endphp
-                            @foreach ($appointments as $appointment)
+                            @forelse ($appointments as $appointment)
                                 <tr>
                                     <th scope="row">{{ $loop->index + $startingNumber }}</th>
                                     <td>{{ $appointment->patient_name }}</td>
@@ -125,7 +128,11 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="12" class="text-center align-middle"><strong>No appointments yet.</strong></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                         <!--Table body-->
                     </table>

@@ -26,7 +26,7 @@
                                         <span>Cardiology</span>
                                         <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
                                     </div>
-                                    <a href="/edit" class="btn btn-primary mt-3 align-self-end">View</a>
+                                    <a href="{{ route('receptionist.dentist.view', $dentist->dentist_id) }}" class="btn btn-primary mt-3 align-self-end">View</a>
                                 </div>
                             </div>
                         </div>

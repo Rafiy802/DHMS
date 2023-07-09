@@ -37,7 +37,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 # Routing for patient
 --------------------------------------------------------------*/
 
-Route::group(['middleware' => ['auth', 'patient']], function() {
+Route::group(['middleware' => ['auth', 'patient']], function () {
     // Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view');
     Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
 
@@ -70,7 +70,7 @@ Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentControlle
 --------------------------------------------------------------*/
 
 
-Route::group(['middleware' => ['auth', 'dentist']], function() {
+Route::group(['middleware' => ['auth', 'dentist']], function () {
 
     //Appointments
     Route::get('/dentistAppointment', [App\Http\Controllers\AppointmentController::class, 'viewDentistAppointment'])->name('dentist.appointment.view');
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth', 'dentist']], function() {
 
     // Dentist Profile
     Route::get('/dentistProfile', [App\Http\Controllers\ProfileController::class, 'viewDentistProfile'])->name('dentist.profile');
-    Route::get('/editProfile', [App\Http\Controllers\ProfileController::class, 'viewEditDentistProfile'])->name('dentist.profile.view');
+    Route::get('/editDentistProfile', [App\Http\Controllers\ProfileController::class, 'viewEditDentistProfile'])->name('dentist.profile.view');
 
     Route::put('/editDentistProfile/{id}', [App\Http\Controllers\ProfileController::class, 'editDentistProfile'])->name('dentist.profile.edit');
 
@@ -103,7 +103,7 @@ Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 
 
 //Receipt
 
- Route::get('/patientReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewDentistReceipt'])->name('dentist.receipt.viewAll');
+Route::get('/patientReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewDentistReceipt'])->name('dentist.receipt.viewAll');
 
 Route::get('/editReceipt', function () {
     return view('dentists.editReceipt');
@@ -124,11 +124,12 @@ Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class,
 # Routing for Receptionist
 --------------------------------------------------------------*/
 
-Route::group(['middleware' => ['auth', 'receptionist']], function() {
+Route::group(['middleware' => ['auth', 'receptionist']], function () {
 
     //Apointments
 
     Route::get('/allAppointment', [App\Http\Controllers\AppointmentController::class, 'viewAllAppointment'])->name('receptionist.allAppointment.view');
+    Route::get('/historyAppointment', [App\Http\Controllers\AppointmentController::class, 'viewHistoryAppointment'])->name('receptionist.historyAppointment.view');
 
 
 
@@ -166,16 +167,30 @@ Route::group(['middleware' => ['auth', 'receptionist']], function() {
 
     Route::get('/patientsReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewAllReceipt'])->name('receptionist.receipt.viewAll');
     // Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class, 'viewSelectedReceipt'])->name('dentist.receipt.view');
+
+
+    // Patient
+    Route::get('/editPatientInfo/{id}', [App\Http\Controllers\PatientController::class, 'viewEditPatientInfo'])->name('receptionist.patientInfo.view');
+    Route::put('/editPatientInfo/{id}', [App\Http\Controllers\PatientController::class, 'editPatientInfo'])->name('receptionist.patientInfo.edit');
+
+
+    // Dentist
+
+    Route::get('/manageDentists', [App\Http\Controllers\DentistController::class, 'viewAllDentist'])->name('receptionist.dentist.manage');
+    Route::get('/addDoctors', function () {
+        return view('receptionist.addDentist');
+    })->name('receptionist.dentist.add');
+    Route::post('/addDentist', [App\Http\Controllers\DentistController::class, 'addNewDentist'])->name('receptionist.dentist.new');
+
+    Route::get('/dentistInfo/{id}', [App\Http\Controllers\DentistController::class, 'viewDentistInfo'])->name('receptionist.dentist.view');
+    Route::get('/editDentistInfo/{id}', [App\Http\Controllers\DentistController::class, 'viewEditDentistInfo'])->name('receptionist.dentist.editView');
+
+    Route::put('/editDentistInfo/{id}', [App\Http\Controllers\DentistController::class, 'editDentistInfo'])->name('receptionist.dentist.edit');
+
 });
 
 
 //Doctors
-
-Route::get('/manageDentists', [App\Http\Controllers\DentistController::class, 'viewAllDentist'])->name('receptionist.dentist.manage');
-Route::get('/addDoctors', function () {
-    return view('receptionist.addDentist');
-})->name('receptionist.dentist.add');
-Route::post('/addDentist', [App\Http\Controllers\DentistController::class, 'addNewDentist'])->name('receptionist.dentist.new');
 
 
 
@@ -183,3 +198,13 @@ Route::post('/addDentist', [App\Http\Controllers\DentistController::class, 'addN
 //Invoices
 Route::get('/invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'generateInvoice'])->name('receptionist.invoice.create');
 
+
+
+// Route::group(['middleware' => ['auth', 'dentist|receptionist']], function() {
+
+// //Patient
+// Route::get('/viewAllPatients', [App\Http\Controllers\PatientController::class, 'viewAllPatients'])->name('dentist.allPatients.view');
+
+// Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 'viewPatient'])->name('dentist.patient.view');
+
+// });
