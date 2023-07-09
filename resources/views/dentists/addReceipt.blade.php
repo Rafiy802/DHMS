@@ -20,9 +20,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Medicine Name</th>
-                                        <th>Medicine Price</th>
                                         <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,8 +48,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Treatment Name</th>
-                                        <th>Treatment Price</th>
-                                        <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,7 +110,6 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td>Dummy</td>
                         <td>
                             <input type="number" class="form-control input-w-md" name="quantity[]" required autocomplete="quantity" value="1" min="1">
                         </td>
@@ -134,7 +131,6 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <td>Dummy</td>
                             <td>
                                 <button type="button" class="btn btn-outline-danger delete-row-btn">Delete</button>
                             </td>
