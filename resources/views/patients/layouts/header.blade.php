@@ -51,6 +51,7 @@
                         class="bi bi-chevron-down"></i></a>
                 <ul>
                     <li><a href="{{ route('patients.profile') }}">Profile</a></li>
+                    <li><a href="{{ route('password.edit') }}">Change Password</a></li>
                     {{-- <li><a href="#">Option 1</a></li>
                     <li><a href="#">Option 2</a></li> --}}
                     <li><a href="{{ route('logout') }}"

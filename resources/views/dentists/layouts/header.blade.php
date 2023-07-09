@@ -51,6 +51,7 @@
                         class="bi bi-chevron-down"></i></a>
                 <ul>
                     <li><a href="{{ route('dentist.profile') }}">Profile</a></li>
+                    <li><a href="{{ route('password.edit') }}">Change Password</a></li>
                     <li><a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">

@@ -65,6 +65,15 @@ Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentControlle
 
 
 
+//Password
+
+Route::get('/changePassword', function () {
+    return view('patients.editPassword');
+})->name('password.edit');
+
+Route::put('/changePassword/{id}', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('password.update')->middleware('auth');
+
+
 /*--------------------------------------------------------------
 # Routing for Dentist
 --------------------------------------------------------------*/

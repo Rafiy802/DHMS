@@ -16,8 +16,20 @@ class MedicineController extends Controller
         return view('receptionist.manageMedicine', ['medicines' => $medicines]);
     }
 
-    public function addNewMedicine(){
+    public function addNewMedicine(request $data){
 
+        $data->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9\s]+$/'],
+            'price' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric'],
+        ], [
+            'name.required' => 'Please insert the name.',
+            'price.required' => 'Please insert the price.',
+            'quantity.required' => 'Please insert the quantity.',
+            'price.numeric' => 'Price must be number.',
+            'quantity.numeric' => 'Quantity must be number',
+        ]);
+        
         $medicine = new Medicine;
 
         $medicine->name = request('name');
@@ -37,8 +49,19 @@ class MedicineController extends Controller
         return view('receptionist.editMedicine', ['medicine' => $medicine]);
     }
 
-    public function editMedicine($id)
+    public function editMedicine($id, request $data)
     {
+        $data->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9\s]+$/'],
+            'price' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric'],
+        ], [
+            'name.required' => 'Please insert the name.',
+            'price.required' => 'Please insert the price.',
+            'quantity.required' => 'Please insert the quantity.',
+            'price.numeric' => 'Price must be number.',
+            'quantity.numeric' => 'Quantity must be number',
+        ]);
 
         $medicine = Medicine::findOrFail($id);
 

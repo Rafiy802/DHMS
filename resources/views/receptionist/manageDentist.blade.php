@@ -15,21 +15,21 @@
 
                 <div class="row">
                     @foreach ($dentists as $dentist)
-                        <div class="col-lg-6 mt-4">
-                            <div class="member d-flex align-items-start">
-                                <div class="pic">
-                                    <img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt="">
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-center">
+                            <div class="member-info d-flex flex-column justify-content-between justify-content-center"> 
+                                <div>
+                                    <h4>{{ $dentist->name }}</h4>
+                                    <span></span>
+                                    <?php
+                                    $joined = \Carbon\Carbon::parse($dentist->created_at)->format('Y-m-d');
+                                    ?>
+                                    <p>Joined since {{ $joined }}</p>
                                 </div>
-                                <div class="member-info d-flex flex-column justify-content-between">
-                                    <div>
-                                        <h4>{{ $dentist->name }}</h4>
-                                        <span>Cardiology</span>
-                                        <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                                    </div>
-                                    <a href="{{ route('receptionist.dentist.view', $dentist->dentist_id) }}" class="btn btn-primary mt-3 align-self-end">View</a>
-                                </div>
+                                <a href="{{ route('receptionist.dentist.view', $dentist->dentist_id) }}" class="btn btn-primary mt-3 align-self-start">View</a>
                             </div>
                         </div>
+                    </div>
                     @endforeach
 
                 </div>

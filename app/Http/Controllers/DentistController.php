@@ -30,10 +30,6 @@ class DentistController extends Controller
             'birthdate' => ['required', 'date'],
             'role' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'dentist_id.required' => 'Please select the dentist.',
-            'date.required' => 'Please select the date.',
-            'time.required' => 'Please select the time.',
         ]);
 
         $user = User::create([

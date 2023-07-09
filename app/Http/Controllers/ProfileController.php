@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -81,4 +82,27 @@ class ProfileController extends Controller
 
         return redirect()->route('dentist.profile');
     }
+
+
+
+    public function changePassword($id, request $data)
+    {
+
+        $data->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'password.confirmed' => 'The password does not match.',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->password = $data['password'];
+
+        $user->password = Hash::make($data->input('password'));
+        $user->save();
+
+        return redirect()->route('home');
+
+    }
+
 }
