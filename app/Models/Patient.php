@@ -10,4 +10,11 @@ class Patient extends Model
     use HasFactory;
 
     protected $primaryKey = 'patient_id';
+
+    protected $fillable = [
+        'patient_id',
+        'user_id',
+        'name',
+        'ICnum',
+    ];
 }

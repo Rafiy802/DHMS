@@ -11,9 +11,7 @@ class MedicineController extends Controller
 
     public function viewAllMedicine(){
 
-        $medicines = Medicine::all();
-
-        //$dentists = User::where('role','=','2')->get();
+        $medicines = Medicine::simplePaginate(10);
 
         return view('receptionist.manageMedicine', ['medicines' => $medicines]);
     }

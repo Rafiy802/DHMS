@@ -4,9 +4,6 @@
     <main id="main">
         <div class="container mt-4">
 
-            <a href="#" class="btn btn-primary"
-                style="margin-top: 100px;">Edit Receipt</a>
-
             <a href="{{ route('receptionist.invoice.create', $receipt->id) }}" class="btn btn-primary"
                 style="margin-top: 100px;">Generate Invoice</a>
 

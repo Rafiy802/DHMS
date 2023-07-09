@@ -27,9 +27,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $currentPage = $medicines->currentPage();
+                                    $perPage = $medicines->perPage();
+                                    $startingNumber = ($currentPage - 1) * $perPage + 1;
+                                @endphp
                                 @foreach ($medicines as $medicine)
                                     <tr>
-                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <th scope="row">{{ $loop->index + $startingNumber }}</th>
                                         <td>{{ $medicine->name }}</td>
                                         <td>{{ $medicine->price }}</td>
                                         <td>{{ $medicine->quantity }}</td>
@@ -50,6 +55,11 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pagination custom-style">
+                    {{ $medicines->links() }}
                 </div>
             </div>
 

@@ -24,6 +24,20 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 col-form-label text-md-end">IC</label>
+
+                            <div class="col-md-6">
+                                <input id="IC" type="text" class="form-control @error('IC') is-invalid @enderror" name="IC" value="{{ old('IC') }}" required autocomplete="IC" autofocus>
+
+                                @error('IC')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         
                         <!-- Hiden Input -->
                         <input id="role" type="hidden" class="form-control" name="role" value="1">

@@ -10,7 +10,7 @@ class TreatmentController extends Controller
     //
     public function viewAllTreatments(){
 
-        $treatments = Treatment::all();
+        $treatments = Treatment::simplePaginate(10);
 
         //$dentists = User::where('role','=','2')->get();
 

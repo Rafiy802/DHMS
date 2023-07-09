@@ -3,27 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\Patient;
 use App\Models\Receipt;
 use App\Models\Treatment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptController extends Controller
 {
     //
-    public function viewNewReceipt(){
+    public function viewNewReceipt($id){
 
+        $patient = Patient::findOrFail($id);
         $medicines = Medicine::all();
         $treatments = Treatment::all();
 
-        return view('dentists.addReceipt', ['medicines' => $medicines, 'treatments' => $treatments]);
+        return view('dentists.addReceipt', ['medicines' => $medicines, 'treatments' => $treatments, 'patient' => $patient]);
     }
 
 
-    public function viewAllReceipt(){
+    public function viewAllReceipt($id){
 
-        $receipts = Receipt::all();
+        $receipts = Receipt::where('patient_id',$id)->orderBy('created_at', 'desc')->simplePaginate(10);
+        $patient = Patient::findOrFail($id);
 
-        return view('dentists.manageReceipt', ['receipts' => $receipts]);
+        return view('receptionist.manageReceipt', ['receipts' => $receipts, 'patient' => $patient]);
+    }
+
+    public function viewDentistReceipt($id)
+    {
+        $curr = Auth::user()->user_id;
+        $patient = Patient::findOrFail($id);
+        $receipts = Receipt::join('patients', 'patients.user_id', '=', 'receipts.patient_id')->join('dentists', 'dentists.dentist_id', '=', 'receipts.dentist_id')->where('receipts.dentist_id',$curr)->where('receipts.patient_id',$id)->orderBy('created_at', 'desc')->simplePaginate(10, ['receipts.*']);
+
+        return view('dentists.manageReceipt', ['receipts' => $receipts, 'patient' => $patient]);
     }
 
 
@@ -34,13 +47,24 @@ class ReceiptController extends Controller
         $medicines = $receipt->medicines;
         $treatments = $receipt->treatments;
 
-        return view('dentists.viewReceipt', compact('receipt', 'medicines', 'treatments'));
+        if(Auth::user()->role == 2){
+            return view('dentists.viewReceipt', compact('receipt', 'medicines', 'treatments'));
+        }
+        else{
+            return view('receptionist.viewReceipt', compact('receipt', 'medicines', 'treatments'));
+        }
+        
     }
 
 
-    public function addNewReceipt(Request $request){
+    public function addNewReceipt(Request $request, $id){
+ 
+        $curr = Auth::user()->user_id;
 
         $receipt = new Receipt;
+
+        $receipt->patient_id = $id;
+        $receipt->dentist_id = $curr;
 
         $receipt->Notes = request('notes');
         $receipt->save();
@@ -76,6 +100,6 @@ class ReceiptController extends Controller
         }
         
 
-        return redirect()->route('dentist.receipt.viewAll');
+        return redirect()->route('dentist.receipt.viewAll', $id);
     }
 }

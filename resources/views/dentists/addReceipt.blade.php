@@ -3,7 +3,7 @@
 @section('content')
     <main id="main">
         <div class="container mt-4">
-            <form method="POST" action="{{route('dentist.receipt.new')}}">
+            <form method="POST" action="{{route('dentist.receipt.new', $patient->user_id)}}">
                 @csrf
 
                 <div class="card mb-4" style="margin-top: 100px;">
@@ -100,44 +100,46 @@
                 let rowNumber = tbody.find('tr').length + 1;
 
                 let newRow = `
-            <tr>
-                <td>${++rowNumber}</td>
-                <td>
-                    <select name="medicine[]" class="form-select">
-                        <option value="">Select Medicine</option>
-                        @foreach ($medicines as $medicine)
-                            <option value="{{ $medicine->id }}">{{ $medicine->name }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td>Dummy</td>
-                <td>
-                    <input type="number" class="form-control input-w-md " name="quantity[]" required autocomplete="quantity" value="1" min="1">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-danger delete-row-btn">Delete</button>
-                </td>
-            </tr>
-        `;
+                    <tr>
+                        <td>${++rowNumber}</td>
+                        <td>
+                            <select name="medicine[]" class="form-select">
+                                <option value="">Select Medicine</option>
+                                @foreach ($medicines as $medicine)
+                                    @if ($medicine->quantity > 0)
+                                        <option value="{{ $medicine->id }}" data-quantity="{{ $medicine->quantity }}">{{ $medicine->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>Dummy</td>
+                        <td>
+                            <input type="number" class="form-control input-w-md" name="quantity[]" required autocomplete="quantity" value="1" min="1">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger delete-row-btn">Delete</button>
+                        </td>
+                    </tr>
+                `;
 
                 if (tableId === 'treatments-table') {
                     newRow = `
-                <tr>
-                    <td>${++rowNumber}</td>
-                    <td>
-                        <select name="treatment[]" class="form-select">
-                            <option value="">Select Treatment</option>
-                            @foreach ($treatments as $treatment)
-                                <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>Dummy</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger delete-row-btn">Delete</button>
-                    </td>
-                </tr>
-            `;
+                        <tr>
+                            <td>${++rowNumber}</td>
+                            <td>
+                                <select name="treatment[]" class="form-select">
+                                    <option value="">Select Treatment</option>
+                                    @foreach ($treatments as $treatment)
+                                        <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>Dummy</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger delete-row-btn">Delete</button>
+                            </td>
+                        </tr>
+                    `;
                 }
 
                 tbody.append(newRow);
@@ -148,10 +150,6 @@
             function updateDeleteButtons(tableId) {
                 let deleteButtons = $('#' + tableId + ' .delete-row-btn');
                 deleteButtons.prop('disabled', false);
-
-                // if (deleteButtons.length === 1) {
-                //     deleteButtons.prop('disabled', true);
-                // }
             }
 
             function updateRowNumbers(tableId) {
@@ -167,6 +165,13 @@
                 row.remove();
                 updateDeleteButtons(tableId);
                 updateRowNumbers(tableId);
+            });
+
+            $(document).on('change', 'select[name="medicine[]"]', function() {
+                let selectedOption = $(this).find(':selected');
+                let quantity = selectedOption.data('quantity');
+                let quantityInput = $(this).closest('tr').find('input[name="quantity[]"]');
+                quantityInput.attr('max', quantity);
             });
         });
     </script>

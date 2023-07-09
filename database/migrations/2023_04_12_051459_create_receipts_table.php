@@ -16,7 +16,12 @@ return new class extends Migration
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
             $table->string('Notes');
+            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('dentist_id');
             $table->timestamps();
+
+            $table->foreign('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
+            $table->foreign('dentist_id')->references('dentist_id')->on('dentists')->onDelete('cascade');
         });
     }
 

@@ -41,6 +41,14 @@ Route::group(['middleware' => ['auth', 'patient']], function() {
     // Route::get('/makeAppointment', [App\Http\Controllers\AppointmentController::class, 'viewMakeAppointment'])->name('makeAppointment.view');
     Route::get('/patientAppointment', [App\Http\Controllers\AppointmentController::class, 'viewPatientAppointment'])->name('patients.appointment.view');
 
+    //Profile
+
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'viewPatientProfile'])->name('patients.profile');
+    Route::get('/editProfile', [App\Http\Controllers\ProfileController::class, 'viewEditPatientProfile'])->name('patients.profile.view');
+
+    Route::put('/editProfile/{id}', [App\Http\Controllers\ProfileController::class, 'editPatientProfile'])->name('patients.profile.edit');
+
+
 });
 
 
@@ -56,24 +64,6 @@ Route::post('/makeAppointment', [App\Http\Controllers\AppointmentController::cla
 Route::put('/cancelAppointment/{id}', [App\Http\Controllers\AppointmentController::class, 'cancelAppointment'])->name('appointment.cancel');
 
 
-//Profile
-
-Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'viewPatientProfile'])->name('patients.profile');
-Route::get('/editProfile', [App\Http\Controllers\ProfileController::class, 'viewEditPatientProfile'])->name('patients.profile.view');
-
-
-Route::put('/editProfile/{id}', [App\Http\Controllers\ProfileController::class, 'editPatientProfile'])->name('patients.profile.edit');
-
-
-
-// Route::get('/editProfile', function () {
-//     return view('patients.editPatientProfile');
-// })->name('patients.profile.view');
-
-// Route::get('/patientAppointment', function () {
-//     return view('patients.patientAppointment');
-// })->name('patients.appointment.view');
-
 
 /*--------------------------------------------------------------
 # Routing for Dentist
@@ -82,11 +72,25 @@ Route::put('/editProfile/{id}', [App\Http\Controllers\ProfileController::class, 
 
 Route::group(['middleware' => ['auth', 'dentist']], function() {
 
+    //Appointments
+    Route::get('/dentistAppointment', [App\Http\Controllers\AppointmentController::class, 'viewDentistAppointment'])->name('dentist.appointment.view');
+
+
+    // Dentist Profile
+    Route::get('/dentistProfile', [App\Http\Controllers\ProfileController::class, 'viewDentistProfile'])->name('dentist.profile');
+    Route::get('/editProfile', [App\Http\Controllers\ProfileController::class, 'viewEditDentistProfile'])->name('dentist.profile.view');
+
+    Route::put('/editDentistProfile/{id}', [App\Http\Controllers\ProfileController::class, 'editDentistProfile'])->name('dentist.profile.edit');
+
+
+
+
+
 });
 
 //Appointments
 
-Route::get('/dentistAppointment', [App\Http\Controllers\AppointmentController::class, 'viewDentistAppointment'])->name('dentist.appointment.view');
+
 
 
 
@@ -99,17 +103,18 @@ Route::get('/viewPatient/{id}', [App\Http\Controllers\PatientController::class, 
 
 //Receipt
 
-Route::get('/patientReceipt', [App\Http\Controllers\ReceiptController::class, 'viewAllReceipt'])->name('dentist.receipt.viewAll');
+ Route::get('/patientReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewDentistReceipt'])->name('dentist.receipt.viewAll');
 
 Route::get('/editReceipt', function () {
     return view('dentists.editReceipt');
 })->name('dentist.receipt.viewEdit');
 
-Route::get('/addReceipt', [App\Http\Controllers\ReceiptController::class, 'viewNewReceipt'])->name('dentist.receipt.add');
+Route::get('/addReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewNewReceipt'])->name('dentist.receipt.add');
 
-Route::post('/addReceipt', [App\Http\Controllers\ReceiptController::class, 'addNewReceipt'])->name('dentist.receipt.new');
+Route::post('/addReceipt{id}', [App\Http\Controllers\ReceiptController::class, 'addNewReceipt'])->name('dentist.receipt.new');
 
 Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class, 'viewSelectedReceipt'])->name('dentist.receipt.view');
+
 
 
 
@@ -157,8 +162,20 @@ Route::group(['middleware' => ['auth', 'receptionist']], function() {
 
 
 
+    //Receipts
+
+    Route::get('/patientsReceipt/{id}', [App\Http\Controllers\ReceiptController::class, 'viewAllReceipt'])->name('receptionist.receipt.viewAll');
+    // Route::get('/viewReceipts/{id}', [App\Http\Controllers\ReceiptController::class, 'viewSelectedReceipt'])->name('dentist.receipt.view');
 });
 
+
+//Doctors
+
+Route::get('/manageDentists', [App\Http\Controllers\DentistController::class, 'viewAllDentist'])->name('receptionist.dentist.manage');
+Route::get('/addDoctors', function () {
+    return view('receptionist.addDentist');
+})->name('receptionist.dentist.add');
+Route::post('/addDentist', [App\Http\Controllers\DentistController::class, 'addNewDentist'])->name('receptionist.dentist.new');
 
 
 
@@ -166,9 +183,3 @@ Route::group(['middleware' => ['auth', 'receptionist']], function() {
 //Invoices
 Route::get('/invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'generateInvoice'])->name('receptionist.invoice.create');
 
-
-
-
-
-//blum di implement
-// Route::delete('/deleteBook/{id}', [App\Http\Controllers\AppointmentController::class, 'deleteAppointment'])->name('appointment.delete');

@@ -1,4 +1,4 @@
-@extends('patients.patientIndex')
+@extends('dentists.dentistIndex')
 
 @section('content')
     <main id="main">
@@ -22,20 +22,20 @@
                             </div>
                             <div class="col-lg-8 col-md-6">
                                 <div class="profile-info">
-                                    @foreach ($patient as $pat)
-                                        <h4>{{ $pat->name }}</h4>
-                                        <p>Email : {{ $pat->email }}</p>
-                                        <p>IC Number : {{ $pat->IC }}</p>
-                                        <p>Birth Date : {{ $pat->birthdate }}</p>
-                                        <p>Mobile Num : {{ $pat->mobile_num }}</p>
-                                        <p>Address : {{ $pat->address }}</p>
+                                    @foreach ($dentists as $dentist)
+                                        <h4>{{ $dentist->name }}</h4>
+                                        <p>Email : {{ $dentist->email }}</p>
+                                        <p>IC Number : {{ $dentist->IC }}</p>
+                                        <p>Birth Date : {{ $dentist->birthdate }}</p>
+                                        <p>Mobile Num : {{ $dentist->mobile_num }}</p>
+                                        <p>Address : {{ $dentist->address }}</p>
                                     @endforeach
                                 </div>
 
                             </div>
                             <div class="row mt-3">
                                 <div class="text-center">
-                                  <a class="appointment-btn scrollto" href="{{ route('patients.profile.view') }}">Edit Profile</a>
+                                  <a class="appointment-btn scrollto" href="{{ route('dentist.profile.view') }}">Edit Profile</a>
                                 </div>
                             </div>
                         </div>

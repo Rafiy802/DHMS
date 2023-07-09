@@ -35,8 +35,15 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="text-center">
-                                    <a class="appointment-btn scrollto" href="{{ route('dentist.receipt.viewAll') }}">Manage
-                                        Receipt</a>
+                                    @if (Auth::user()->role == 2)
+                                        <a class="appointment-btn scrollto"
+                                            href="{{ route('dentist.receipt.viewAll', $patient->user_id) }}">Manage
+                                            Receipt</a>
+                                    @else
+                                        <a class="appointment-btn scrollto"
+                                            href="{{ route('receptionist.receipt.viewAll', $patient->user_id) }}">Manage
+                                            Receipt</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

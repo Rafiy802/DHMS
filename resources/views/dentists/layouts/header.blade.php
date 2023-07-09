@@ -50,7 +50,7 @@
             <li class="dropdown"><a href="#"><span> {{ Auth::user()->name }}</span> <i
                         class="bi bi-chevron-down"></i></a>
                 <ul>
-                    <li><a href="{{ route('patients.profile') }}">Profile</a></li>
+                    <li><a href="{{ route('dentist.profile') }}">Profile</a></li>
                     <li><a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">

@@ -1,4 +1,4 @@
-@extends('patients.patientIndex')
+@extends('dentists.dentistIndex')
 
 @section('content')
     <main id="main">
@@ -16,15 +16,15 @@
                             
                             <div class="col-lg-8 col-md-6">
                                 <div class="profile-info">
-                                  @foreach($patient as $pat)
-                                  <form method="POST" action="{{route('patients.profile.edit', $pat->user_id)}}">
+                                  @foreach($dentists as $dentist)
+                                  <form method="POST" action="{{route('dentist.profile.edit', $dentist->user_id)}}">
                                         @csrf
                                         @method('PUT')
                                         <div class="row mb-3">
                                             <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
                 
                                             <div class="col-md-6">
-                                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$pat->name}}" required autocomplete="name" autofocus>
+                                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$dentist->name}}" required autocomplete="name" autofocus>
                                             </div>
                                         </div>
                                         
@@ -35,7 +35,7 @@
                                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
                 
                                             <div class="col-md-6">
-                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$pat->email}}" required autocomplete="email" disabled>
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$dentist->email}}" required autocomplete="email" disabled>
                                             </div>
                                         </div>
                 
@@ -43,7 +43,7 @@
                                             <label for="address" class="col-md-4 col-form-label text-md-end">Address</label>
                 
                                             <div class="col-md-6">
-                                                <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$pat->address}}" required autocomplete="address">{{$pat->address}}</textarea>
+                                                <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$dentist->address}}" required autocomplete="address">{{$dentist->address}}</textarea>
                                                
                                             </div>
                                         </div>
@@ -52,7 +52,7 @@
                                             <label for="mobile_num" class="col-md-4 col-form-label text-md-end">Mobile Number</label>
                 
                                             <div class="col-md-6">
-                                                <input id="mobile_num" type="text" class="form-control @error('mobile_num') is-invalid @enderror" name="mobile_num" value="{{$pat->mobile_num}}" required autocomplete="mobile_num">
+                                                <input id="mobile_num" type="text" class="form-control @error('mobile_num') is-invalid @enderror" name="mobile_num" value="{{$dentist->mobile_num}}" required autocomplete="mobile_num">
                                                 
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                             <label for="birthdate" class="col-md-4 col-form-label text-md-end">Birthdate</label>
                 
                                             <div class="col-md-6">
-                                                <input type="date" id="birthdate" name="birthdate" class="form-control @error('birthdate') is-invalid @enderror" value="{{$pat->birthdate}}" required autocomplete="birthdate" disabled>
+                                                <input type="date" id="birthdate" name="birthdate" class="form-control @error('birthdate') is-invalid @enderror" value="{{$dentist->birthdate}}" required autocomplete="birthdate" disabled>
                                             </div>
                                         </div>
                                         <div class="row mb-0">

@@ -14,14 +14,15 @@
                         <div class="col-md-12">
                             <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">My Appointment</h2>
                             <!-- <div class="input-group md-form form-sm form-2 pl-0">
-                                    <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
-                                    <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
-                                </div> -->
+                                            <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
+                                            <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                                        </div> -->
                         </div>
                         <!-- Grid column -->
                     </div>
                     <!-- Grid row -->
                     <!--Table-->
+                    <h5 class="pt-3 pb-4 font-up deep-purple-text">Today Appointment</h5>
                     <table class="table table-striped">
                         <!--Table head-->
                         <thead>
@@ -37,27 +38,76 @@
                         <!--Table head-->
                         <!--Table body-->
                         <tbody>
-                            <!-- <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
+                            {{-- @php
+                                $currentPage = $todayAppointment->currentPage();
+                                $perPage = $todayAppointment->perPage();
+                                $startingNumber = ($currentPage - 1) * $perPage + 1;
+                            @endphp --}}
+                            @foreach ($todayAppointment as $today)
                                 <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
+                                    {{-- <th scope="row">{{ $loop->index + $startingNumber }}</th> --}}
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <td>{{ $today->day }}</td>
+                                    <td>{{ $today->time }}</td>
+                                    <td>{{ $today->dentist_name }}</td>
+                                    <td>{{ $today->status }}</td>
+                                    <td>
+                                        @if ($today->status == 'Cancelled')
+                                            {{ $today->status }}
+                                        @else
+                                            <form method="POST"
+                                                action="{{ route('appointment.cancel', $today->id) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <!-- <a class="cancel-btn scrollto" href="#">Cancel</a> -->
+                                                <div class="row mb-0" style="margin-left: -135px;">
+                                                    <div class="col-md-6 offset-md-4">
+                                                        <input type="hidden" value="{{ $today->id }}"
+                                                            name="appointment_id">
+                                                        <input type="hidden" value="Cancelled" name="appointment_status">
+                                                        <button type="submit" class="btn btn-danger">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr> -->
+                            @endforeach
+                        </tbody>
+                        <!--Table body-->
+                    </table>
+                    <!--Table-->
+
+                    {{-- <div class="row">
+                        <div class="pagination custom-style">
+                            {{ $todayAppointment->links() }}
+                        </div>
+                    </div> --}}
+
+                    <h5 class="mt-5 pt-3 pb-4 font-up deep-purple-text">Upcoming Appointment</h5>
+                    <table class="table table-striped">
+                        <!--Table head-->
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Dentist</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+                        <!--Table body-->
+                        <tbody>
+                            @php
+                                $currentPage = $appointments->currentPage();
+                                $perPage = $appointments->perPage();
+                                $startingNumber = ($currentPage - 1) * $perPage + 1;
+                            @endphp
                             @foreach ($appointments as $appointment)
                                 <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <th scope="row">{{ $loop->index + $startingNumber }}</th>
                                     <td>{{ $appointment->day }}</td>
                                     <td>{{ $appointment->time }}</td>
                                     <td>{{ $appointment->dentist_name }}</td>
@@ -88,8 +138,15 @@
                         <!--Table body-->
                     </table>
                     <!--Table-->
+
+                    <div class="row">
+                        <div class="pagination custom-style">
+                            {{ $appointments->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                 </div>
             </div>
+            
         </div>
 
     </main>

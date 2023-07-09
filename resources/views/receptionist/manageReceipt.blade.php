@@ -1,4 +1,4 @@
-@extends('dentists.dentistIndex')
+@extends('receptionist.receptionistIndex')
 
 @section('content')
     <main id="main">
@@ -12,11 +12,14 @@
                     <div class="row">
                         <!-- Grid column -->
                         <div class="col-md-12">
-                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">All Patients</h2>
+                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text">{{ $patient->name }}'s
+                                Receipt</h2>
                             <!-- <div class="input-group md-form form-sm form-2 pl-0">
-                                    <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
-                                    <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
-                                </div> -->
+                                        <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
+                                        <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                                    </div> -->
+                            {{-- <p class="text-muted"><a href="{{ route('dentist.receipt.add') }}"><code>Add Receipt</code></a> --}}
+                            </p>
                         </div>
                         <!-- Grid column -->
                     </div>
@@ -27,30 +30,30 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Patient</th>
-                                <th>Registered On</th>
+                                <th>Receipt ID</th>
+                                <th>Created On</th>
+                                <th>Updated On</th>
                                 <th>Action</th>
-                                <!-- <th>Dentist</th>
-                                    <th>Status</th>
-                                    <th>Action</th> -->
+                                <!-- <th>Status</th>
+                                        <th>Action</th> -->
                             </tr>
                         </thead>
                         <!--Table head-->
                         <!--Table body-->
                         <tbody>
                             @php
-                                $currentPage = $patients->currentPage();
-                                $perPage = $patients->perPage();
+                                $currentPage = $receipts->currentPage();
+                                $perPage = $receipts->perPage();
                                 $startingNumber = ($currentPage - 1) * $perPage + 1;
                             @endphp
-                            @foreach ($patients as $patient)
+                            @foreach ($receipts as $rec)
                                 <tr>
                                     <th scope="row">{{ $loop->index + $startingNumber }}</th>
-                                    <td>{{ $patient->name }}</td>
-                                    <td> TBA </td>
+                                    <td>{{ $rec->id }}</td>
+                                    <td>{{ $rec->created_at }}</td>
+                                    <td>{{ $rec->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('dentist.patient.view', $patient->patient_id) }}">View More
-                                            Info</a>
+                                        <a href="{{ route('dentist.receipt.view', $rec->id) }}">View Receipt</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -62,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="pagination custom-style">
-                    {{ $patients->links() }}
+                    {{ $receipts->links() }}
                 </div>
             </div>
         </div>

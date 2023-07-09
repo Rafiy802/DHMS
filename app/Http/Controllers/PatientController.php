@@ -11,7 +11,7 @@ class PatientController extends Controller
 
     public function viewAllPatients(){
 
-        $patients = Patient::all();
+        $patients = Patient::simplePaginate(10);
 
         //$dentists = User::where('role','=','2')->get();
 
